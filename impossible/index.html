@@ -1,0 +1,127 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Impossible store (local test)</title><style>html,body{margin:0;background:#0b0c0e}</style><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&display=swap" rel="stylesheet"><style>#jlb-is{--obs:#0b0c0e;--graph:#17181b;--ivory:#ece6da;--champ:#c8b38a;--cyan:#5fe4ee;--amber:#f6c25e;--red:#ed1c24;--smoke:#8f8a82;--line:rgba(236,230,218,.14);--disp:'Archivo','Helvetica Neue',Arial,sans-serif;--sans:'Archivo','Helvetica Neue',Arial,sans-serif;background:var(--obs);color:var(--ivory);font-family:var(--sans);font-size:18px;line-height:1.6;-webkit-font-smoothing:antialiased;position:relative;overflow-x:clip}#jlb-is *{box-sizing:border-box}#jlb-is a{color:inherit}#jlb-is :focus-visible{outline:2px solid var(--amber);outline-offset:3px;border-radius:2px}#jlb-is .x-vh{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}.x-skip{position:absolute;left:16px;top:-60px;z-index:60;background:var(--ivory);color:var(--obs)!important;padding:10px 14px;text-decoration:none}.x-skip:focus{top:12px}.x-bag{position:absolute;z-index:6;top:96px;right:clamp(14px,2.2vw,30px);display:none;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;border:1px solid var(--amber);color:var(--amber);font-size:13px}.x-bag.is-on{display:inline-flex;animation:x-pop .5s cubic-bezier(.2,1.6,.4,1)}@keyframes x-pop{from{transform:scale(.4)}to{transform:none}}.x-btn{display:inline-block;background:var(--red);color:#fff!important;text-decoration:none;font-weight:600;padding:15px 24px;border-radius:999px;font-size:16px;line-height:1;border:1px solid var(--red);transition:background .2s,border-color .2s}.x-btn:hover{background:#c4121a;border-color:#c4121a}.x-btn--sm{padding:10px 16px;font-size:14px}.x-btn--ghost{background:transparent;color:var(--ivory)!important;border-color:rgba(236,230,218,.36)}.x-btn--ghost:hover{background:rgba(236,230,218,.08);border-color:rgba(236,230,218,.6)}.x-link{color:var(--cyan)!important;text-underline-offset:4px}.x-story{position:relative;height:1100vh}.x-stage{position:sticky;top:0;height:100vh;width:100%;overflow:hidden;z-index:1;pointer-events:none;background:var(--obs)}.x-stage canvas{position:absolute;inset:0;z-index:1;display:block;width:100%!important;height:100%!important;opacity:0;transition:opacity 1.4s ease}.x-ready .x-stage canvas{opacity:1}.x-stage::before{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(90deg,rgba(11,12,14,.86),rgba(11,12,14,.5) 30%,rgba(11,12,14,0) 50%)}.x-hud{position:absolute;inset:0;z-index:5}.x-loading{position:absolute;left:50%;bottom:10vh;width:120px;height:2px;margin-left:-60px;background:rgba(236,230,218,.12);overflow:hidden;transition:opacity .6s}.x-loading i{display:block;height:100%;width:0;background:var(--ivory);transition:width .3s}.x-ready .x-loading{opacity:0}.x-rail{position:absolute;right:clamp(14px,2.2vw,30px);top:50%;transform:translateY(-50%);display:grid;gap:14px;pointer-events:auto}.x-rail button{width:22px;height:22px;padding:0;border:0;background:transparent;cursor:pointer;display:grid;place-items:center}.x-rail button::before{content:"";width:5px;height:5px;border-radius:50%;background:rgba(236,230,218,.32);transition:all .3s}.x-rail button.is-on::before{width:7px;height:22px;border-radius:4px;background:var(--ivory)}.x-cats{position:absolute;left:50%;bottom:7vh;transform:translateX(-50%);display:flex;gap:6px;padding:6px;border-radius:999px;background:rgba(23,24,27,.72);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid var(--line);opacity:0;visibility:hidden;pointer-events:auto;transition:opacity .4s,visibility .4s}.x-cats.is-on{opacity:1;visibility:visible}.x-cats button{font:inherit;font-size:14px;font-weight:500;color:var(--ivory);background:transparent;border:0;border-radius:999px;padding:10px 16px;cursor:pointer;white-space:nowrap;transition:background .25s,color .25s}.x-cats button:hover{background:rgba(236,230,218,.08)}.x-cats button[aria-pressed="true"]{background:var(--ivory);color:var(--obs)}.x-ch{position:absolute;left:0;right:0;top:calc(var(--s) * 1000vh);height:calc((var(--e) - var(--s)) * 1000vh + 100vh);z-index:3;pointer-events:none}.x-copy{position:sticky;top:calc(100vh - 44vh);margin-left:clamp(16px,6vw,96px);max-width:min(40vw,560px);pointer-events:auto;text-shadow:0 1px 28px rgba(11,12,14,.9)}.x-copy h1,.x-copy h2{font-family:var(--disp);font-weight:700;font-size:clamp(38px,4.6vw,76px);line-height:1;letter-spacing:-.035em;margin:0 0 22px;text-wrap:balance}.x-ch--hero .x-copy{top:calc(100vh - 52vh)}.x-ch--hero h1{font-size:clamp(44px,5.6vw,96px);font-weight:800;letter-spacing:-.045em;line-height:.96}.x-ch--cats .x-copy{top:15vh;max-width:min(30vw,420px)}.x-ch--cats h2{font-size:clamp(30px,2.9vw,48px)!important}.x-ch--end .x-copy{top:30vh}.x-copy p{margin:0 0 14px;font-size:clamp(17px,1.25vw,20px);color:#cbc5bb;max-width:40ch}.x-ctas{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-top:26px!important}.x-scroll{font-size:13px;letter-spacing:.08em;color:var(--smoke);padding-left:8px}.x-labels{position:absolute;inset:0}.x-node{position:absolute;left:0;top:0;opacity:0;font-size:13px;font-weight:500;letter-spacing:.02em;padding:6px 11px;border:1px solid var(--line);border-radius:999px;background:rgba(11,12,14,.72);white-space:nowrap;transition:border-color .3s,color .3s,box-shadow .3s}.x-node.is-on{border-color:var(--cyan);color:#bff6fa;box-shadow:0 0 18px rgba(95,228,238,.25)}.x-card,.x-checkout{position:absolute;right:clamp(48px,6vw,96px);top:22vh;width:min(330px,86vw);background:rgba(23,24,27,.78);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:14px;padding:22px;opacity:0;visibility:hidden;pointer-events:auto}.x-card__brand{margin:0;font-family:var(--disp);font-size:13px;font-weight:700;letter-spacing:.2em;color:var(--champ)}.x-card__name{font-family:var(--disp);font-weight:700;font-size:26px;letter-spacing:-.02em;margin:8px 0 4px;color:var(--ivory)}.x-card__price{margin:0 0 16px;color:var(--ivory);font-size:17px}.x-stock{display:block;font-size:13px;color:#9fd8c6}.x-finishes{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}.x-finishes button{display:flex;align-items:center;gap:7px;font:inherit;font-size:13px;color:var(--ivory);background:transparent;border:1px solid rgba(236,230,218,.22);border-radius:999px;padding:6px 10px;cursor:pointer}.x-finishes button i{width:12px;height:12px;border-radius:50%;display:block;border:1px solid rgba(255,255,255,.3)}.x-finishes button[aria-pressed="true"]{border-color:var(--ivory);background:rgba(236,230,218,.08)}.x-add{width:100%;font:inherit;font-weight:600;font-size:15px;background:var(--amber);color:#1c1204;border:0;border-radius:999px;padding:13px;cursor:pointer}.x-add.is-added{background:var(--ivory)}.x-note{margin:12px 0 0;font-size:12px;color:var(--smoke)}.x-steps{list-style:none;margin:0;padding:0;display:grid;gap:12px}.x-step{display:grid;gap:2px;padding:12px 14px;border-radius:10px;border:1px solid rgba(236,230,218,.1);color:#76716a;transition:all .35s}.x-step b{font-weight:600;font-size:15px}.x-step span{font-size:13px}.x-step.is-done{color:#cbc5bb}.x-step.is-active{color:var(--ivory);border-color:var(--amber);background:rgba(255,180,77,.08)}.x-nogl .x-story{height:auto}.x-nogl .x-stage{position:absolute;height:100%;background:radial-gradient(60% 40% at 70% 40%,rgba(200,179,138,.16),transparent 70%),var(--obs)}.x-nogl .x-hud{display:none}.x-nogl .x-ch{position:relative;top:auto;height:auto;padding:22vh 0 0}.x-nogl .x-copy{position:static}.x-nogl .x-ch--end{padding-bottom:18vh}.x-after{position:relative;z-index:2;background:var(--obs)}.x-sec{max-width:1180px;margin:0 auto;padding:clamp(64px,10vw,128px) clamp(16px,4vw,32px);border-top:1px solid var(--line)}.x-sec h2{font-family:var(--disp);font-weight:700;font-size:clamp(32px,3.8vw,56px);line-height:1.02;letter-spacing:-.03em;margin:0 0 32px;max-width:18ch}.x-sec h3{font-size:19px;font-weight:600;margin:0 0 8px;color:var(--ivory)}.x-sec p,.x-sec dd{color:#c0bab0}.x-intro{border-top:0}.x-intro h2{font-weight:800;font-size:clamp(40px,5.6vw,92px);line-height:.96;letter-spacing:-.045em;max-width:14ch}.x-intro p{font-size:clamp(18px,1.5vw,22px);max-width:52ch}.x-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(24px,4vw,48px)}.x-cols>div{padding-top:18px;border-top:1px solid var(--champ)}.x-start{list-style:none;counter-reset:s;padding:0;margin:0;display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(24px,4vw,48px)}.x-start li{counter-increment:s}.x-start li::before{content:counter(s);display:block;font-family:var(--disp);font-weight:800;font-size:56px;color:var(--champ);line-height:1;margin-bottom:14px}.x-contact{display:grid;grid-template-columns:1fr 1.2fr;gap:clamp(24px,5vw,72px);align-items:start}.x-contact__alt{font-size:16px}.x-contact__alt a{color:var(--amber)}.x-contact__form{background:#f4f1ec;border-radius:14px;padding:8px;min-height:880px}@media (max-width:819px){#jlb-is{font-size:17px}.x-bag{top:84px}.x-stage::before{background:linear-gradient(180deg,rgba(11,12,14,.78),rgba(11,12,14,0) 42%)}.x-copy,.x-ch--hero .x-copy,.x-ch--cats .x-copy,.x-ch--end .x-copy{top:11vh;max-width:none;margin:0 16px}.x-copy h1,.x-copy h2,.x-ch--hero h1{font-size:clamp(30px,8.4vw,42px)}.x-copy p{font-size:16px;line-height:1.5}.x-ch--hero .x-copy p:first-of-type{max-width:34ch}.x-rail{display:none}.x-cats{left:16px;right:16px;transform:none;bottom:4vh;flex-wrap:wrap;justify-content:center;border-radius:18px}.x-cats button{padding:9px 12px;font-size:13px}.x-card,.x-checkout{left:16px;right:16px;top:auto;width:auto;bottom:3vh;padding:16px}.x-card__name{font-size:20px;margin:4px 0 2px}.x-card__price{margin-bottom:10px}.x-card .x-note,.x-stock{display:none}.x-finishes{margin-bottom:10px}.x-steps{gap:8px}.x-step{padding:8px 12px}.x-node{font-size:11px;padding:4px 8px}.x-cols,.x-start{grid-template-columns:1fr}.x-contact{grid-template-columns:1fr}}@media (prefers-reduced-motion:reduce){ #jlb-is *{transition:none!important;animation:none!important} }.x-proof{display:flex;flex-wrap:wrap;gap:clamp(24px,6vw,96px);margin:0 0 32px;padding:0;list-style:none}.x-proof b{display:block;font-family:var(--disp);font-weight:800;font-size:clamp(40px,5vw,64px);line-height:1;color:var(--ivory)}.x-proof span{color:#c0bab0}.x-credit{max-width:1180px;margin:0 auto;padding:0 clamp(16px,6vw,96px) 40px;font-size:13px;color:var(--smoke)}</style></head><body><div id="jlb-is" class="lb-track">
+<a class="x-skip" href="#x-after">Skip the animation</a>
+
+<section class="x-story" aria-label="A store that builds itself, changes shape for different businesses, and shows the systems behind every order">
+  <div class="x-stage">
+    <div class="x-hud">
+      <div class="x-loading" aria-hidden="true"><i></i></div>
+      <span class="x-bag" aria-live="polite"><span class="x-vh">Example cart: </span><b>1</b><span class="x-vh"> item</span></span>
+      <nav class="x-rail" aria-label="Chapters">
+        <button type="button" data-go="0"><span class="x-vh">Chapter 1, the product</span></button>
+        <button type="button" data-go="0.135"><span class="x-vh">Chapter 2, the store</span></button>
+        <button type="button" data-go="0.31"><span class="x-vh">Chapter 3, store types</span></button>
+        <button type="button" data-go="0.5"><span class="x-vh">Chapter 4, shopping</span></button>
+        <button type="button" data-go="0.705"><span class="x-vh">Chapter 5, the systems</span></button>
+        <button type="button" data-go="0.96"><span class="x-vh">Chapter 6, your project</span></button>
+      </nav>
+      <div class="x-cats" role="group" aria-label="Choose a store type">
+        <button type="button" data-cat="1" aria-pressed="false">Fashion</button>
+        <button type="button" data-cat="0" aria-pressed="true">Home and living</button>
+        <button type="button" data-cat="2" aria-pressed="false">Beauty</button>
+        <button type="button" data-cat="3" aria-pressed="false">Electronics</button>
+      </div>
+      <div class="x-labels" aria-hidden="true">
+        <span class="x-node" data-node="0">Payments</span>
+        <span class="x-node" data-node="1">Inventory</span>
+        <span class="x-node" data-node="2">CRM</span>
+        <span class="x-node" data-node="3">Shipping</span>
+        <span class="x-node" data-node="4">Accounting</span>
+        <span class="x-node" data-node="5">Analytics</span>
+      </div>
+      <aside class="x-card" aria-label="Example product page, FORMA Arc desk lamp">
+        <p class="x-card__brand">FORMA</p>
+        <h3 class="x-card__name">Arc desk lamp</h3>
+        <p class="x-card__price">$180 <span class="x-stock">In stock, ships tomorrow</span></p>
+        <div class="x-finishes" role="group" aria-label="Finish">
+          <button type="button" data-finish="0" aria-pressed="true"><i style="background:#e8642c"></i>Signal orange</button>
+          <button type="button" data-finish="1" aria-pressed="false"><i style="background:#3a3a3c"></i>Graphite</button>
+          <button type="button" data-finish="2" aria-pressed="false"><i style="background:#9fd8c6"></i>Mint</button>
+        </div>
+        <button type="button" class="x-add">Add to cart</button>
+        <p class="x-note">FORMA is a fictional store, shown for illustration.</p>
+      </aside>
+      <aside class="x-checkout" aria-label="Example checkout">
+        <ol class="x-steps">
+          <li class="x-step"><b>Cart</b><span class="x-step__item">Arc desk lamp, Signal orange</span></li>
+          <li class="x-step"><b>Payment</b><span>Card ending 4242</span></li>
+          <li class="x-step"><b>Order confirmed</b><span>Order FM-1042, $180.00</span></li>
+        </ol>
+        <p class="x-note">A demonstration. No payment is taken.</p>
+      </aside>
+    </div>
+  </div>
+
+  <section class="x-ch x-ch--hero" style="--s:0;--e:.11">
+    <div class="x-copy">
+      <h1>It starts with something worth selling.</h1>
+      <p>We design and build Shopify, WooCommerce and BigCommerce stores, then connect them to the systems that run the business behind them.</p>
+      <p class="x-ctas"><a class="x-btn" href="#x-contact">Discuss your project</a><span class="x-scroll" aria-hidden="true">Scroll</span></p>
+    </div>
+  </section>
+  <section class="x-ch" style="--s:.135;--e:.29">
+    <div class="x-copy"><h2>We build the experience around your business.</h2><p>Layout, lighting, navigation and product pages, shaped around what you sell and how your customers shop.</p></div>
+  </section>
+  <section class="x-ch x-ch--cats" style="--s:.31;--e:.475">
+    <div class="x-copy"><h2>No two businesses are alike. Their stores shouldn't be either.</h2><p>Pick a store type below and the same space rebuilds itself around it.</p></div>
+  </section>
+  <section class="x-ch" style="--s:.495;--e:.64">
+    <div class="x-copy"><h2>A shopping experience worth staying for.</h2><p>Finishes that change the product in front of you, and a cart that is one tap away. Try the buttons.</p></div>
+  </section>
+  <section class="x-ch" style="--s:.70;--e:.82">
+    <div class="x-copy"><h2>Beautiful in front. Brilliant behind the scenes.</h2><p>Each order flows through payments, inventory, CRM, shipping, accounting and analytics without anyone typing it twice.</p>
+      <p class="x-ctas"><a class="x-link" href="#x-contact">Connect your store to the rest of your business</a></p></div>
+  </section>
+  <section class="x-ch x-ch--end" style="--s:.94;--e:1">
+    <div class="x-copy"><h2>Now let's build yours.</h2><p>Tell us what you want to build. We'll help you figure out the rest.</p>
+      <p class="x-ctas"><a class="x-btn" href="#x-contact">Discuss your project</a><a class="x-btn x-btn--ghost" href="/portfolio/">Explore our work</a></p></div>
+  </section>
+</section>
+
+<main id="x-after" class="x-after">
+  <section class="x-sec x-intro">
+    <h2>Beautiful on the outside. Brilliant underneath.</h2>
+    <p>We design and build the store your customers see, and we connect it to the software that runs the business behind it, so orders, stock and customers stay in step without anyone retyping them.</p>
+  </section>
+
+  <section class="x-sec" aria-labelledby="x-svc">
+    <h2 id="x-svc">What we build</h2>
+    <div class="x-cols">
+      <div><h3>The store</h3><p>Shopify, Shopify Plus, BigCommerce, WooCommerce, Magento, Ecwid and OpenCart stores: product pages, collections, search, cart and checkout, designed around your brand and easy for your team to run. <a href="/services/web-design/">Web design</a></p></div>
+      <div><h3>The systems behind it</h3><p>Payments, inventory, CRM, shipping, accounting and marketing tools connected to the store, with the repetitive steps automated. <a href="/systems-integration/">Systems integration</a> and <a href="/automation/">automation</a></p></div>
+      <div><h3>The work after launch</h3><p>Hosting, updates, fixes and improvements as the business grows, or training so your own team can take it from there. <a href="/services/hosting-support/">Hosting and support</a></p></div>
+    </div>
+  </section>
+
+  <section class="x-sec x-work" aria-labelledby="x-wk">
+    <h2 id="x-wk">Fifteen years of building for growing businesses</h2>
+    <ul class="x-proof">
+      <li><b>15+</b><span>years</span></li>
+      <li><b>500+</b><span>clients</span></li>
+      <li><b>1,000+</b><span>projects</span></li>
+    </ul>
+    <p><a class="x-btn x-btn--ghost" href="/portfolio/">Explore our work</a></p>
+  </section>
+
+  <section class="x-sec" aria-labelledby="x-how">
+    <h2 id="x-how">How a store project runs</h2>
+    <ol class="x-start">
+      <li><h3>Plan</h3><p>Who buys from you, what they need to see before they buy, and which systems the store has to talk to.</p></li>
+      <li><h3>Design and write</h3><p>Page layouts and copy together, reviewed with you before anything is built.</p></li>
+      <li><h3>Build and launch</h3><p>Tested on real devices, with redirects in place so your old pages keep their search value.</p></li>
+    </ol>
+  </section>
+
+  <section class="x-sec x-contact" id="x-contact" aria-labelledby="x-ct">
+    <div class="x-contact__copy">
+      <h2 id="x-ct">Start a project</h2>
+      <p>Send us a few lines about your store and what you want it to do. We'll come back with questions and a plan.</p>
+      <p class="x-contact__alt">Prefer to call? <a href="tel:+19545395678">954-539-5678</a></p>
+    </div>
+    <div class="x-contact__form">
+      <iframe class="skip-lazy no-lazy" data-skip-lazy="1" data-no-lazy="1" loading="eager" src="https://portal.jlbusa.com/widget/form/rKscs7UQF2BfOrwNHOaS" style="width:100%;height:100%;border:none;border-radius:4px" id="inline-rKscs7UQF2BfOrwNHOaS" data-layout="{'id':'INLINE'}" data-trigger-type="alwaysShow" data-trigger-value="" data-activation-type="alwaysActivated" data-activation-value="" data-deactivation-type="neverDeactivate" data-deactivation-value="" data-form-name="Base Contact Form" data-height="1420" data-layout-iframe-id="inline-rKscs7UQF2BfOrwNHOaS" data-form-id="rKscs7UQF2BfOrwNHOaS" title="Contact JLB USA"></iframe>
+    </div>
+  </section>
+  <p class="x-credit">FORMA is a fictional store, shown for illustration. Product models and studio lighting from Poly Haven (CC0).</p>
+</main>
+</div>
+<script type="module" src="is.js"></script></body></html>

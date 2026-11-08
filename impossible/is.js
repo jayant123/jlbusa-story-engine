@@ -1,7 +1,9 @@
 // JLB USA "The Impossible Store" scroll experience.
 // A product in a dark studio, a boutique that assembles around it, four store types the same fixtures
 // reshape into, an interactive product page, an iris in the floor that opens onto the systems behind
-// every order, and a finale where the whole world folds into a luminous cube.
+// every order, and a finale where the whole world folds into a luminous cube. The cube then opens onto
+// three real client stores, each a frame holding genuine desktop and phone screenshots of the live site.
+// The original timeline runs over the first 80% of the scroll (p = raw / K); the stores use the rest.
 // Every scene state is derived from scroll progress (0..1), so scrolling back and jumping both work.
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/+esm';
 import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/loaders/GLTFLoader.js/+esm';
@@ -423,6 +425,78 @@ function main() {
   }
   cube.visible = false;
 
+  // ---------- chapter 6: three real stores ----------
+  // Screenshots are real captures of the live sites (see the media manifest); they are shown unlit and
+  // un-tonemapped so the colours stay faithful. The surrounding architecture is the only invented part.
+  const K = 0.8, PX = 3.25;
+  const WORK = [
+    { slug: 'the-maison-marie', slab: 0xeee4d4, accent: [2.1, 1.75, 1.25], mob: 1169 / 540 },
+    { slug: 'musee-bath', slab: 0xf0d5ce, accent: [1.1, 1.9, 1.75], mob: 1169 / 540 },
+    { slug: 'the-seaside-style', slab: 0xdbe6ec, accent: [1.2, 1.65, 2.2], mob: 989 / 540 },
+  ];
+  const SHOTS = ['home', 'collection', 'product'];
+  const texLoader = new THREE.TextureLoader();
+  const texCache = {};
+  function workTex(name, cb) {
+    let e = texCache[name];
+    if (!e) {
+      e = texCache[name] = { t: null, cbs: [] };
+      texLoader.load(BASE + 'work/' + name + '.webp', (t) => {
+        t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy());
+        e.t = t; e.cbs.forEach((f) => f(t)); e.cbs = [];
+      });
+    }
+    if (cb) { if (e.t) cb(e.t); else e.cbs.push(cb); }
+  }
+  const shotMat = (o = 1) => new THREE.MeshBasicMaterial({ color: 0x17181b, toneMapped: false, fog: false, transparent: o < 1, opacity: o });
+  const portals = WORK.map((w, i) => {
+    const g = new THREE.Group(); g.visible = false; scene.add(g);
+    const DW = 2.3, DH = DW / 1.6, Y0 = 0.14;
+    const plinth = new THREE.Mesh(new RoundedBoxGeometry(DW + 0.9, Y0, 0.8, 3, 0.02), M.marble);
+    plinth.position.y = Y0 / 2; plinth.receiveShadow = true; g.add(plinth);
+    const strip = new THREE.Mesh(new THREE.BoxGeometry(DW + 0.86, 0.008, 0.012), glow(...w.accent, 1)); strip.position.set(0, Y0 + 0.004, 0.4); g.add(strip);
+    const slab = new THREE.Mesh(new RoundedBoxGeometry(DW + 0.5, DH + 0.62, 0.12, 4, 0.03), new THREE.MeshPhysicalMaterial({ color: w.slab, roughness: 0.62, clearcoat: 0.2 }));
+    slab.position.set(0, Y0 + (DH + 0.62) / 2, -0.12); slab.castShadow = true; slab.receiveShadow = true; g.add(slab);
+    const sy = Y0 + 0.28 + DH / 2;
+    const bar = (bw, bh, x, y) => { const m = new THREE.Mesh(new THREE.BoxGeometry(bw, bh, 0.05), M.metal); m.position.set(x, y, -0.03); g.add(m); };
+    bar(DW + 0.06, 0.03, 0, sy + DH / 2 + 0.015); bar(DW + 0.06, 0.03, 0, sy - DH / 2 - 0.015); bar(0.03, DH, -DW / 2 - 0.015, sy); bar(0.03, DH, DW / 2 + 0.015, sy);
+    const geo = new THREE.PlaneGeometry(DW, DH);
+    const A = new THREE.Mesh(geo, shotMat()); A.position.set(0, sy, 0); g.add(A);
+    const B = new THREE.Mesh(geo, shotMat(0)); B.position.set(0, sy, 0.002); B.visible = false; g.add(B);
+    const MW = 0.6, MH = MW * w.mob;
+    const phone = new THREE.Group(); phone.position.set(DW / 2 - 0.12, Y0 + 0.08 + MH / 2, 0.34); phone.rotation.y = -0.12; g.add(phone);
+    const bez = new THREE.Mesh(new RoundedBoxGeometry(MW + 0.07, MH + 0.07, 0.05, 4, 0.03), M.device); bez.castShadow = true; phone.add(bez);
+    const PM = new THREE.Mesh(new THREE.PlaneGeometry(MW, MH), shotMat()); PM.position.z = 0.0255; phone.add(PM);
+    return { g, A, B, PM, w, i, cur: 0, next: -1, fadeT: -1, timer: 0, loaded: false };
+  });
+  const setShot = (mesh, t) => { mesh.material.map = t; mesh.material.color.set(0xffffff); mesh.material.needsUpdate = true; };
+  function loadPortals() {
+    portals.forEach((P) => {
+      if (P.loaded) return; P.loaded = true;
+      workTex(P.w.slug + '-home-d', (t) => setShot(P.A, t));
+      workTex(P.w.slug + '-home-m', (t) => setShot(P.PM, t));
+    });
+  }
+  let extrasLoaded = false;
+  const loadExtras = () => { if (extrasLoaded) return; extrasLoaded = true; portals.forEach((P) => SHOTS.slice(1).forEach((s) => workTex(P.w.slug + '-' + s + '-d'))); };
+  // evidence sequence: home -> collection -> product, crossfading between real screenshots only
+  function stepShot(P) {
+    if (P.fadeT >= 0) return;
+    const n = (P.cur + 1) % SHOTS.length;
+    workTex(P.w.slug + '-' + SHOTS[n] + '-d', (t) => {
+      if (reduce) { setShot(P.A, t); P.cur = n; return; }
+      setShot(P.B, t); P.B.material.opacity = 0; P.B.visible = true; P.next = n; P.fadeT = performance.now();
+    });
+  }
+  const plinks = [...root.querySelectorAll('.x-pl')];
+  plinks.forEach((a) => {
+    const P = portals[+a.dataset.portal];
+    const start = () => { loadExtras(); a.classList.add('is-on'); if (!P.timer) { stepShot(P); P.timer = setInterval(() => stepShot(P), 2400); } };
+    const stop = () => { a.classList.remove('is-on'); clearInterval(P.timer); P.timer = 0; };
+    a.addEventListener('pointerenter', start); a.addEventListener('focus', start);
+    a.addEventListener('pointerleave', stop); a.addEventListener('blur', stop);
+  });
+
   // ---------- store types ----------
   // Every fixture has a target state per store type; the scene blends between them.
   const CAT_NAMES = ['Home and living', 'Fashion', 'Beauty', 'Electronics'];
@@ -603,7 +677,8 @@ function main() {
     const pT = progress();
     // jumps (chapter rail, links, keyboard) land directly on the new scene
     if (reduce || Math.abs(pT - pS) > 0.06) pS = pT; else pS += (pT - pS) * Math.min(1, dt * 7);
-    const p = pS;
+    const r = pS;               // raw scroll progress (chapters, rail, real stores)
+    const p = Math.min(r / K, 1); // the original store timeline
     if (p < 0.3) picked = -1;
 
     // ---- store type blend ----
@@ -630,14 +705,26 @@ function main() {
 
     // ---- camera ----
     camAt(p);
+    const qc = ss(0.775, 0.85, r);   // camera moves to the three stores
+    let mobK = 0;
+    if (qc > 0) {
+      const asp = W / H, tf = 2 * Math.tan(THREE.MathUtils.degToRad(15));
+      let dist, tx = 0, ty = 1.5;
+      if (isMob()) { ty = 1.62; dist = 3.3 / (tf * asp); mobK = ss(0.865, 0.895, r) + ss(0.925, 0.955, r); tx = (mobK - 1) * PX; }
+      else dist = Math.max(9.8, 10.6 / (tf * asp));
+      camPos.lerp(vA.set(tx, ty + dist * 0.07, dist), qc);
+      camTgt.lerp(vB.set(tx, ty, 0), qc);
+      camFov = lerp(camFov, 30, qc);
+    }
+    root.classList.toggle('x-portal-on', qc > 0.5);
     ptr.sx += (ptr.x - ptr.sx) * dt * 2.5; ptr.sy += (ptr.y - ptr.sy) * dt * 2.5;
     const par = reduce ? 0 : 1;
     camera.position.copy(camPos).add(vA.set(ptr.sx * 0.22 * par, -ptr.sy * 0.1 * par, 0));
     camera.lookAt(camTgt);
     camera.fov = camFov;
     const cardOn = ss(0.5, 0.52, p) * (1 - ss(0.585, 0.6, p));
-    if (isMob()) camera.setViewOffset(W, H, 0, -H * 0.17 + H * 0.25 * ss(0.5, 0.52, p) * (1 - ss(0.6, 0.63, p)), W, H);
-    else camera.setViewOffset(W, H, W * offAt(p), 0, W, H);
+    if (isMob()) camera.setViewOffset(W, H, 0, (-H * 0.17 + H * 0.25 * ss(0.5, 0.52, p) * (1 - ss(0.6, 0.63, p))) * (1 - qc), W, H);
+    else camera.setViewOffset(W, H, W * offAt(p) * (1 - qc), 0, W, H);
     camera.updateProjectionMatrix();
     const cd = camPos.distanceTo(camTgt);
     scene.fog.near = cd * 0.9 + 2; scene.fog.far = cd * 0.9 + 24;
@@ -864,20 +951,44 @@ function main() {
     top.position.y = CS + o6 * 1.6; top.visible = o6 < 0.98;
     platform.visible = o6 > 0.02;
     platform.scale.setScalar(Math.max(ss(0.2, 1, o6), 1e-4));
-    if (bloom) bloom.strength = 0.45 + 0.15 * lum * (1 - o6);
+    if (bloom) bloom.strength = (0.45 + 0.15 * lum * (1 - o6)) * (1 - qc);
+    const shrink = 1 - ss(0.775, 0.82, r);
+    cube.scale.multiplyScalar(Math.max(shrink, 1e-4)); if (shrink < 0.01) cube.visible = false;
+
+    // ---- moment 7: the cube opens onto three real stores ----
+    if (r > 0.6) loadPortals();
+    if (r > 0.84) loadExtras();
+    const labOn = ss(0.835, 0.86, r);
+    portals.forEach((P, i) => {
+      const t = ss(0.775 + i * 0.012, 0.835 + i * 0.012, r);
+      P.g.visible = t > 0.001;
+      if (!P.g.visible) return;
+      P.g.position.set(lerp(0, (i - 1) * PX, t), lerp(0.1, 0, t), lerp(0, i === 1 ? 0 : -0.45, t));
+      P.g.scale.setScalar(Math.max(lerp(0.05, 1, t), 1e-4));
+      P.g.rotation.y = lerp(0, (1 - i) * 0.2, t);
+      if (P.fadeT >= 0) {
+        const k = cl((performance.now() - P.fadeT) / 600);
+        P.B.material.opacity = k;
+        if (k >= 1) { setShot(P.A, P.B.material.map); P.cur = P.next; P.B.visible = false; P.fadeT = -1; }
+      }
+      const a = plinks[i];
+      const op = labOn * (isMob() ? cl(1 - Math.abs(mobK - i) * 2) : 1);
+      if (op > 0.01) { proj.set(P.g.position.x, -0.08, P.g.position.z + 0.3).project(camera); a.style.transform = `translate(${(proj.x * 0.5 + 0.5) * W}px,${(-proj.y * 0.5 + 0.5) * H}px) translate(-50%,0)`; }
+      a.style.opacity = op; a.style.visibility = op > 0.01 ? 'visible' : 'hidden';
+    });
 
     // ---- chapter copy + rail ----
     for (const c of chapters) {
-      const o = c.s <= 0 ? 1 - ss(c.e - 0.02, c.e + 0.005, p) : ss(c.s - 0.005, c.s + 0.02, p) * (c.e >= 1 ? 1 : 1 - ss(c.e - 0.015, c.e + 0.005, p));
+      const o = c.s <= 0 ? 1 - ss(c.e - 0.02, c.e + 0.005, r) : ss(c.s - 0.005, c.s + 0.02, r) * (c.e >= 1 ? 1 : 1 - ss(c.e - 0.015, c.e + 0.005, r));
       c.el.style.opacity = o;
     }
-    let ri = 0; railBtns.forEach((b, i) => { if (p >= parseFloat(b.dataset.go) - 0.02) ri = i; });
+    let ri = 0; railBtns.forEach((b, i) => { if (r >= parseFloat(b.dataset.go) - 0.02) ri = i; });
     if (ri !== lastRail) { railBtns.forEach((b, i) => { b.classList.toggle('is-on', i === ri); if (i === ri) b.setAttribute('aria-current', 'step'); else b.removeAttribute('aria-current'); }); lastRail = ri; }
 
     if (composer) composer.render(); else renderer.render(scene, camera);
   }
   frame();
-  window.__is = { go(p) { const r = story.getBoundingClientRect(); scrollTo(0, scrollY + r.top + p * (r.height - innerHeight)); }, scene, camera, D, L, setFinish, get p() { return pS; } };
+  window.__is = { go(p) { const r = story.getBoundingClientRect(); scrollTo(0, scrollY + r.top + p * (r.height - innerHeight)); }, scene, camera, D, L, setFinish, get p() { return pS; }, portals };
 }
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', main); else main();
